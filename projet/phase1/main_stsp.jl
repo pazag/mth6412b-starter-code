@@ -5,12 +5,17 @@ function create_graph(filename::String)
   for node_id in keys(node_dict)
     node=Node(node_id,node_dict[node_id])
     add_node!(graph,node)
+  end
   edge_origin=1
-  for edge_brut in edge_list
-      node_1=Node(edge_origin,node_dict[edge_origin])
-      for edge_ in edge_brut
-         node2=Node(edge_[1],node_dict[edge_[1])
-         edge=Edge(e
+  for list_edge in list_list_edge
+      for edge_brut in list_edge
+         edge=Edge(edge_origin,edge_brut[1],edge_brut[2])
+         add_edge!(graph,edge)
+      end
+      edge_origin+=1
+  end
+  graph
+end
     
   
   
