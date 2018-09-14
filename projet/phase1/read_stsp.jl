@@ -184,15 +184,15 @@ function read_stsp(filename::String)
     edges_brut = read_edges(header, filename)
     edges = []
     for k = 1 : dim
-        edge_list = Int[]
+        edge_list = (Int, Number)[]
         push!(edges, edge_list)
     end
 
     for edge in edges_brut
         if edge_weight_format in ["UPPER_ROW", "LOWER_COL", "UPPER_DIAG_ROW", "LOWER_DIAG_COL"]
-            edge[1] != 0 && edge[1] != dim+1 && push!(edges[edge[1]], edge[2]) 
+            edge[1] != 0 && edge[1] != dim+1 && push!(edges[edge[1]], (edge[2],edge[3])) 
         else
-            edge[2] != 0 && edge[2] != dim+1 && push!(edges[edge[2]], edge[1])
+            edge[2] != 0 && edge[2] != dim+1 && push!(edges[edge[2]], (edge[1],edge[3]))
         end
     end
 
@@ -216,8 +216,8 @@ function plot_graph(nodes, edges)
 
     # edge positions
     for k = 1 : length(edges)
-        for j in edges[k]
-            plot!([nodes[k][1], nodes[j][1]], [nodes[k][2], nodes[j][2]],
+        for t in edges[k]
+            plot!([nodes[k][1], nodes[t[1][1]], [nodes[k][2], nodes[t[1]][2]],
                   linewidth=1.5, alpha=0.75, color=:lightgray)
         end
     end
