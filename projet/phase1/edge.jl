@@ -7,26 +7,22 @@ abstract type AbstractEdge{T} end
 
 """
 mutable struct Edge{T} <: AbstractEdge{T}
-    name::String
-    node1::AbstractNode{T}
-    node2::AbstractNode{T}
-    weight::Float64
+    name_node1::String
+    name_node2::String
+    weight::T
 end
 
 # on présume que tous les noeuds dérivant d'AbstractNode
 # posséderont des champs `name` et `data`.
 
-"""Renvoie le nom de l'arête."""
-name(edge::AbstractEdge) = edge.name
-
 """Renvoie les donnees contenues dans l'arête."""
 weight(edge::AbstractEdge) = edge.weight
 
 """Renvoie les sommets de l'arête."""
-nodes(edge::AbstractEdge)= (edge.node1, edge.node2)
+nodes(edge::AbstractEdge)= (edge.name_node1, edge.name_node2)
 
 """Affiche une arête"""
 function show(edge::AbstractEdge)
-    s = string("Edge ", name(edge), ", weight: ", weight(edge),", node : ",name(edge.node1) ", ",name(edge.node2) )
+    s = string("Edge ", edge.name_node1, " - " ,edge.name_node2,  ", weight: ", weight(edge) )
     println(s)
 end
