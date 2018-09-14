@@ -190,9 +190,9 @@ function read_stsp(filename::String)
 
     for edge in edges_brut
         if edge_weight_format in ["UPPER_ROW", "LOWER_COL", "UPPER_DIAG_ROW", "LOWER_DIAG_COL"]
-            edge[1] != 0 && edge[1] != dim+1 && push!(edges[edge[1]], edge[2])
+            edge[1] != 0 && edge[1] != dim+1 && push!(edges[edge[1]], edge[2]) && push!(edges[edge[1]], edge[3])
         else
-            edge[2] != 0 && edge[2] != dim+1 && push!(edges[edge[2]], edge[1])
+            edge[2] != 0 && edge[2] != dim+1 && push!(edges[edge[2]], edge[1]) && push!(edges[edge[1]], edge[3])
         end
     end
 
