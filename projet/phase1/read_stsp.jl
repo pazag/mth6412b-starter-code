@@ -32,7 +32,7 @@ Si les coordonnees ne sont pas donnees, un dictionnaire vide est renvoye.
 Le nombre de noeuds est dans header["DIMENSION"]."""
 function read_nodes(header::Dict{String}{String}, filename::String)
 
-    nodes = Dict{Int}{Array{Float64}}()
+    nodes = Dict{Int}{Array{Float64,1}}()
     node_coord_type = header["NODE_COORD_TYPE"]
     display_data_type = header["DISPLAY_DATA_TYPE"]
 
@@ -127,18 +127,18 @@ function read_edges(header::Dict{String}{String}, filename::String)
                 while n_data > 0
                     n_on_this_line = min(n_to_read, n_data)
 
-                    for j = start:start + n_on_this_line
+                    for j = start:start + n_on_this_line - 1
                         n_edges = n_edges + 1
                         if edge_weight_format in ["UPPER_ROW", "LOWER_COL"]
-                            edge = (k, i+k+1,data[j+1])
+                            edge = (k+1, i+k+1+1, parse(Float64, data[j+1]))
                         elseif edge_weight_format in ["UPPER_DIAG_ROW", "LOWER_DIAG_COL"]
-                            edge = (k, i+k,data[j+1])
+                            edge = (k+1, i+k+1, parse(Float64, data[j+1]))
                         elseif edge_weight_format in ["UPPER_COL", "LOWER_ROW"]
-                            edge = (i+k+1, k,data[j+1])
+                            edge = (i+k+1+1, k+1, parse(Float64, data[j+1]))
                         elseif edge_weight_format in ["UPPER_DIAG_COL", "LOWER_DIAG_ROW"]
-                            edge = (i, k,data[j+1])
+                            edge = (i+1, k+1, parse(Float64, data[j+1]))
                         elseif edge_weight_format == "FULL_MATRIX"
-                            edge = (k, i,data[j+1])
+                            edge = (k+1, i+1, parse(Float64, data[j+1]))
                         else
                             warn("Unknown format - function read_edges")
                         end
@@ -182,33 +182,36 @@ function read_stsp(filename::String)
 
     Base.print("Reading of edges : ")
     edges_brut = read_edges(header, filename)
-    edges = []
+    graph_edges = []
     for k = 1 : dim
-        edge_list = (Int, Number)[]
-        push!(edges, edge_list)
+        edge_list = Tuple{Int, Number}[]
+        push!(graph_edges, edge_list)
     end
 
     for edge in edges_brut
         if edge_weight_format in ["UPPER_ROW", "LOWER_COL", "UPPER_DIAG_ROW", "LOWER_DIAG_COL"]
-            edge[1] != 0 && edge[1] != dim+1 && push!(edges[edge[1]], (edge[2],edge[3])) 
+            edge[1] != 0 && edge[1] != dim+1 && push!(graph_edges[edge[1]], (edge[2],edge[3]))
         else
-            edge[2] != 0 && edge[2] != dim+1 && push!(edges[edge[2]], (edge[1],edge[3]))
+            edge[2] != 0 && edge[2] != dim+1 && push!(graph_edges[edge[2]], (edge[1],edge[3]))
         end
     end
 
     for k = 1 : dim
-        edges[k] = sort(edges[k])
+        graph_edges[k] = sort(graph_edges[k])
+    end
+    while length(graph_edges[end]) == 0
+        pop!(graph_edges)
     end
     println("✓")
-    return graph_nodes, edges
+    return graph_nodes, graph_edges
 end
 
 """Affiche un graphe étant données un ensemble de noeuds et d'arêtes.
 
 Exemple :
 
-        graph_nodes, edges = read_stsp("bayg29.tsp")
-        plot_graph(graph_nodes, edges)
+        graph_nodes, graph_edges = read_stsp("bayg29.tsp")
+        plot_graph(graph_nodes, graph_edges)
         savefig("bayg29.pdf")
 """
 function plot_graph(nodes, edges)
@@ -217,7 +220,7 @@ function plot_graph(nodes, edges)
     # edge positions
     for k = 1 : length(edges)
         for t in edges[k]
-            plot!([nodes[k][1], nodes[t[1][1]], [nodes[k][2], nodes[t[1]][2]],
+            plot!([nodes[k][1], nodes[t[1]][1]], [nodes[k][2], nodes[t[1]][2]],
                   linewidth=1.5, alpha=0.75, color=:lightgray)
         end
     end

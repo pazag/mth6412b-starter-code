@@ -1,28 +1,26 @@
 import Base.show
 
-"""Type abstrait dont d'autres types de noeuds dériveront."""
-abstract type AbstractEdge{T} end
+"""Type représentant les aretes d'un graphe.
 
-"""Type représentant les arêtes d'un graphe
+Exemple:
+
+        arete = Edge("Ross", "Rachel", 1)
+        arete = Node("Chandler", "Monica", 3.0)
 
 """
-mutable struct Edge{T} <: AbstractEdge{T}
-    name_node1::String
-    name_node2::String
-    weight::T
+mutable struct Edge
+    name_node1_::String
+    name_node2_::String
+    weight_::Number
 end
 
-# on présume que tous les noeuds dérivant d'AbstractNode
-# posséderont des champs `name` et `data`.
-
-"""Renvoie les donnees contenues dans l'arête."""
-weight(edge::AbstractEdge) = edge.weight
+"""Renvoie le poids de l'arête."""
+weight(edge::Edge) = edge.weight_
 
 """Renvoie les sommets de l'arête."""
-nodes(edge::AbstractEdge)= (edge.name_node1, edge.name_node2)
+edge_nodes(edge::Edge)= edge.name_node1_, edge.name_node2_
 
 """Affiche une arête"""
-function show(edge::AbstractEdge)
-    s = string("Edge ", edge.name_node1, " - " ,edge.name_node2,  ", weight: ", weight(edge) )
-    println(s)
+function show(edge::Edge)
+    s = string("Edge ", edge.name_node1_, " - " ,edge.name_node2_,  ", weight: ", edge.weight_ )
 end

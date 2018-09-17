@@ -10,35 +10,39 @@ Exemple :
 		node1 = Node("Joe", 3.14)
 		node2 = Node("Steve", exp(1))
 		node3 = Node("Jill", 4.12)
-		G = Graph("Ick", [node1, node2, node3])
+		arete = Edge("Joe", "Steve", 1)
+		G = Graph("Ick", [node1, node2, node3], [arete])
 
 Attention, tous les noeuds doivent avoir des données de même type.
 """
 mutable struct Graph{T} <: AbstractGraph{T}
-	name::String
-	nodes::Vector{Node{T}}
-	edges::Vector{Edge{T}}
+	name_::String
+	nodes_::Vector{Node{T}}
+	edges_::Vector{Edge}
 end
 
 """Ajoute un noeud au graphe."""
 function add_node!(graph::Graph{T}, node::Node{T}) where T
-	push!(graph.nodes, node)
+	push!(graph.nodes_, node)
 	graph
 end
 
 """Ajoute une arête au graphe.
-Si les noeuds ne sont pas dans le graphe, on les ajoute.
-"""
-function add_edge!(graph::Graph{T}, edge::Edge{T}) where T
-	nodes=graph.nodes
-	(node1,node2)=nodes(edge)
-	if !(node1 in nodes)
-		add_node!(graph,node1)
+Attention, les noeuds de l'arete doivent être dans le graph"""
+function add_edge!(graph::Graph{T}, edge::Edge) where T
+	node1_in_graph = false
+	node2_in_graph = false
+	name_node1, name_node2 = edge_nodes(edge)
+	for node in nodes(graph)
+		if name(node) == name_node1
+			node1_in_graph = true
+		end
+		if name(node) == name_node2
+			node2_in_graph = true
+		end
 	end
-	if !(node2 in nodes)
-		add_node!(graph,node2)
-	end
-	push!(graph.edges, edge)
+	node_not_in_graph = "The nodes are not in the graph, add the nodes in the graph before adding the edge"
+	node1_in_graph && node2_in_graph ? push!(graph.edges_, edge) : throw(node_not_in_graph)
 	graph
 end
 
@@ -46,32 +50,36 @@ end
 # posséderont des champs `name` et `nodes`.
 
 """Renvoie le nom du graphe."""
-name(graph::AbstractGraph) = graph.name
+name(graph::AbstractGraph) = graph.name_
 
 """Renvoie la liste des noeuds du graphe."""
-nodes(graph::AbstractGraph) = graph.nodes
+nodes(graph::AbstractGraph) = graph.nodes_
 
 """Renvoie le nombre de noeuds du graphe."""
-nb_nodes(graph::AbstractGraph) = length(graph.nodes)
+nb_nodes(graph::AbstractGraph) = length(graph.nodes_)
 
 """Renvoie la liste des arêtes du graphe."""
-edges(graph::AbstractGraph) = graph.edges
+edges(graph::AbstractGraph) = graph.edges_
 
 """Renvoie le nombre d'arêtes du graphe."""
-nb_edges(graph::AbstractGraph) = length(graph.edges)
+nb_edges(graph::AbstractGraph) = length(graph.edges_)
 
 """Affiche un graphe"""
 function show(graph::Graph)
-	name = name(graph)
 	graph_nb_nodes = nb_nodes(graph)
-	graph_nb_edges=nb_edges(graph)
-	s = string("Graph ", name, " has ", graph_nb_nodes, " nodes and " , graph_nb_edges,"edges." )
-	s=string(s,"\n NODES")
-	for node in nodes(graph)
-		s = string(s, "\n", show(node))
+	graph_nb_edges = nb_edges(graph)
+	s = string("Graph ", graph.name_, " has ", graph_nb_nodes, " nodes and " , graph_nb_edges," edges." )
+	if graph_nb_nodes > 0
+		s = string(s,"\n NODES")
+		for node in graph.nodes_
+			s = string(s, "\n", show(node))
+		end
 	end
-	s=string(s,"\n EDGES")
-	for edge in edges(graph)
-		s=string(s,"\n", show(edge))
+	if graph_nb_edges > 0
+		s = string(s,"\n EDGES")
+		for edge in graph.edges_
+			s=string(s,"\n", show(edge))
+		end
+	end
 	println(s)
 end

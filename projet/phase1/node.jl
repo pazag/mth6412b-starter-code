@@ -13,21 +13,20 @@ Exemple:
 
 """
 mutable struct Node{T} <: AbstractNode{T}
-    name::String
-    data::T
+    name_::String
+    data_::T
 end
 
 # on présume que tous les noeuds dérivant d'AbstractNode
 # posséderont des champs `name` et `data`.
 
 """Renvoie le nom du noeud."""
-name(node::AbstractNode) = node.name
+name(node::AbstractNode) = node.name_
 
 """Renvoie les donnees contenues dans le noeud."""
-data(node::AbstractNode) = node.data
+data(node::AbstractNode) = node.data_
 
 """Affiche un noeud"""
 function show(node::AbstractNode)
     s = string("Node ", name(node), ", data: ", data(node))
-    println(s)
 end
