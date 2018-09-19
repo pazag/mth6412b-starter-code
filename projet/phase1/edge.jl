@@ -1,5 +1,7 @@
 import Base.show
 
+abstract type AbstractEdge end 
+        
 """Type représentant les aretes d'un graphe.
 
 Exemple:
@@ -8,7 +10,7 @@ Exemple:
         arete = Node("Chandler", "Monica", 3.0)
 
 """
-mutable struct Edge
+mutable struct Edge <: AbstractEdge
     name_node1_::String
     name_node2_::String
     weight_::Number
