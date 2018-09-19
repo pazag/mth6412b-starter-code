@@ -16,4 +16,6 @@ read_edges(header,file_to_open)
 
 read_stsp(file_to_open)
 
-create_graph(file_to_open)
+graph=create_graph(file_to_open)
+
+show(graph)
