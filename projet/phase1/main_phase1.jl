@@ -8,4 +8,4 @@ include("create_graph.jl")
 path="../../instances/stsp/"
 filename="bays29.tsp"
 
-create_graph(path+filename)
+create_graph(string(path+filename))
