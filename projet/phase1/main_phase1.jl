@@ -8,4 +8,12 @@ include("create_graph.jl")
 path="../../instances/stsp/"
 filename="bays29.tsp"
 
-create_graph(string(path+filename))
+file_to_open=string(path,filename)
+
+header=read_header(file_to_open)
+
+read_edges(header,file_to_open)
+
+read_stsp(file_to_open)
+
+create_graph(file_to_open)
