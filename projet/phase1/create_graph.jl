@@ -16,17 +16,16 @@ function create_graph(filename::String)
   graph_nodes = Node{T}[]
 
   for node_id in keys(nodes_dict)
-    node = Node(string(node_id), nodes_dict[node_id])
+    node = Node(node_id, nodes_dict[node_id])
     push!(graph_nodes, node)
   end
-
 
   edge_origin = 1
   graph_edges = Edge[]
 
   for edges_list in edges_list_list
       for edge_brut in edges_list
-         edge = Edge(string(edge_origin), string(edge_brut[1]), edge_brut[2])
+         edge = Edge(edge_origin, edge_brut[1], edge_brut[2])
          push!(graph_edges, edge)
       end
       edge_origin+=1

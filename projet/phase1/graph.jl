@@ -1,4 +1,5 @@
 import Base.show
+include("edge.jl")
 
 """Type abstrait dont d'autres types de graphes dériveront."""
 abstract type AbstractGraph{T} end
@@ -21,7 +22,8 @@ mutable struct Graph{T} <: AbstractGraph{T}
 	edges_::Vector{Edge}
 end
 
-"""Ajoute un noeud au graphe."""
+"""Ajoute un noeud au graphe.
+Attention, si le noeud est déjà dans le graph, on ne fait rien."""
 function add_node!(graph::Graph{T}, node::Node{T}) where T
 	push!(graph.nodes_, node)
 	graph
@@ -32,12 +34,12 @@ Attention, les noeuds de l'arete doivent être dans le graph"""
 function add_edge!(graph::Graph{T}, edge::Edge) where T
 	node1_in_graph = false
 	node2_in_graph = false
-	name_node1, name_node2 = edge_nodes(edge)
+	id_node1, id_node2 = edge_nodes(edge)
 	for node in nodes(graph)
-		if name(node) == name_node1
+		if id(node) == id_node1
 			node1_in_graph = true
 		end
-		if name(node) == name_node2
+		if id(node) == id_node2
 			node2_in_graph = true
 		end
 	end

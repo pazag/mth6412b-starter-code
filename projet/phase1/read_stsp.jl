@@ -184,7 +184,7 @@ function read_stsp(filename::String)
     edges_brut = read_edges(header, filename)
     graph_edges = []
     for k = 1 : dim
-        edge_list = Tuple{Int, Number}[]
+        edge_list = Tuple{Int, Real}[]
         push!(graph_edges, edge_list)
     end
 

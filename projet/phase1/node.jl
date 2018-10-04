@@ -13,7 +13,7 @@ Exemple:
 
 """
 mutable struct Node{T} <: AbstractNode{T}
-    name_::String
+    id_::Int
     data_::T
 end
 
@@ -21,7 +21,7 @@ end
 # posséderont des champs `name` et `data`.
 
 """Renvoie le nom du noeud."""
-name(node::AbstractNode) = node.name_
+id(node::AbstractNode) = node.id_
 
 """Renvoie les donnees contenues dans le noeud."""
 data(node::AbstractNode) = node.data_
