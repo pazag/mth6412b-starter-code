@@ -13,29 +13,34 @@ Par convention, si un noeud est son propre parent alors noeud.parent_ = nothing.
 mutable struct ConnectedNode{T} <: AbstractNode{T}
     id_::Int
     data_::T
-    id_parent_::Int
+    parent_::Union{AbstractNode,Nothing}
 end
 
 """Constructeurs pour un noeud qui est son propre parent"""
 function ConnectedNode(id::Int, data::T) where T
-    ConnectedNode(id, data, id)
+    ConnectedNode(id, data, nothing)
+end
+
+"""Constructeurs pour un noeud connecté à partir d'un noeud"""
+function ConnectedNode(node::AbstractNode)
+    ConnectedNode(id(node), data(node))
 end
 
 """Renvoie le parent du noeud."""
 get_parent(connected_node::ConnectedNode) = connected_node.id_parent_
 
 """Réaffecte le parent du noeud."""
-function set_parent!(connected_node::ConnectedNode, new_parent::Int)
-    connected_node.id_parent_ = new_parent
+function set_parent!(connected_node::ConnectedNode, new_parent::Union{AbstractNode,Nothing})
+    connected_node.parent_ = new_parent
 end
 
-# """Fourni la racine de la composante connexe"""
-# function get_root(connected_node::ConnectedNode)
-#     node = connected_node
-#     parent = connected_node.parent_
-#     while parent != nothing
-#         node = parent
-#         parent = node.parent_
-#     end
-#     return node
-# end
+"""Fourni la racine de la composante connexe"""
+function get_root(connected_node::ConnectedNode)
+    node = connected_node
+    parent = connected_node.parent_
+    while parent != nothing
+        node = parent
+        parent = node.parent_
+    end
+    return node
+end

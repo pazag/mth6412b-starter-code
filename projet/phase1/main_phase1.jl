@@ -5,7 +5,7 @@ include("read_stsp.jl")
 include("create_graph.jl")
 
 
-path="../../instances/stsp/"
+path="instances/stsp/"
 filename="bays29.tsp"
 
 file_to_open=string(path,filename)
