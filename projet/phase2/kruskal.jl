@@ -1,9 +1,14 @@
-include("connected_node.jl")
+include("../phase1/node.jl")
+include("../phase1/edge.jl")
 include("../phase1/graph.jl")
+
+
+include("connected_node.jl")
+
 
 """On fournit un dictionnaire avce les noeuds du graphe
 """
-function Intitialisation_kruskal(g::AbstractGraph{T}) where T
+function dict_connected_composant(g::AbstractGraph{T}) where T
 	list_nodes = nodes(g)
 	dict_node  = Dict{Int}{ConnectedNode{T}}()
 	for node in list_nodes
@@ -17,7 +22,7 @@ function kruskal(graph::AbstractGraph)
 
     old_edges_list = edges(graph)
 	edges_list=sort_edges!(old_edges_list)
-    dict_c_node = Intitialisation_kruskal(graph)
+    dict_c_node = dict_connected_composant(graph)
 
     k = 0
 	i = 1
@@ -37,7 +42,16 @@ function kruskal(graph::AbstractGraph)
 
 		i=i+1
     end
-	g_name = name(graph)
+	g_name = string( "Arbre de poids minimal de ", name(graph))
 	list_node = nodes(graph)
     Graph(g_name, list_node, A_k)
+end
+
+
+function get_total_weight(graph::AbstractGraph)
+	total_weight=0
+	for edge in edges(graph)
+		total_weight+=weight(edge)
+	end
+	total_weight
 end

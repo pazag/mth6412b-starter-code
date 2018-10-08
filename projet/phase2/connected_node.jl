@@ -26,8 +26,8 @@ function ConnectedNode(node::AbstractNode)
     ConnectedNode(id(node), data(node))
 end
 
-"""Renvoie le parent du noeud."""
-get_parent(connected_node::ConnectedNode) = connected_node.id_parent_
+"""Renvoie le parent du noeud"""
+parent(connected_node::ConnectedNode) = connected_node.parent_
 
 """Réaffecte le parent du noeud."""
 function set_parent!(connected_node::ConnectedNode, new_parent::Union{AbstractNode,Nothing})
