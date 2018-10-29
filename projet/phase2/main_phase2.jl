@@ -44,7 +44,7 @@ println("\n\n\n\n\n\n\n")
 """Test de l'algorithme de kruskal à partir d'une instance"""
 
 path="../../instances/stsp/"
-filename="bays29.tsp"
+filename="pa561.tsp"
 file_to_open=string(path,filename)
 header=read_header(file_to_open)
 read_edges(header,file_to_open)
@@ -52,3 +52,5 @@ read_stsp(file_to_open)
 graph_2=create_graph(file_to_open)
 kruskal_graph2=kruskal(graph_2)
 show(kruskal_graph2)
+
+println(nb_nodes(kruskal_graph2))

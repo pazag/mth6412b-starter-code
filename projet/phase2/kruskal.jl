@@ -18,6 +18,8 @@ function dict_connected_composant(g::AbstractGraph{T}) where T
 	dict_node
 end
 
+"""Renvoie un arbre de recouvrement minimal en utilisant l'algorithme de Kruskal
+"""
 function kruskal(graph::AbstractGraph)
 
     old_edges_list = edges(graph)

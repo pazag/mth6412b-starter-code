@@ -14,6 +14,12 @@ mutable struct ConnectedNode{T} <: AbstractNode{T}
     id_::Int
     data_::T
     parent_::Union{AbstractNode,Nothing}
+    rang_::Int64
+end
+
+"""Constructeurs pour un noeud qui n'a pas de rang"""
+function ConnectedNode(id::Int, data::T, parent::Union{AbstractNode,Nothing}) where T
+    ConnectedNode(id, data, parent, 0)
 end
 
 """Constructeurs pour un noeud qui est son propre parent"""
@@ -32,6 +38,14 @@ parent(connected_node::ConnectedNode) = connected_node.parent_
 """Réaffecte le parent du noeud."""
 function set_parent!(connected_node::ConnectedNode, new_parent::Union{AbstractNode,Nothing})
     connected_node.parent_ = new_parent
+end
+
+"""Renvoie le rang du noeud."""
+rang(connected_node::ConnectedNode) = connected_node.rang_
+
+"""Réaffecte le rang du noeud."""
+function set_rang!(connected_node::ConnectedNode, new_rang::Int64)
+    connected_node.rang_ = new_rang
 end
 
 """Fourni la racine de la composante connexe"""
