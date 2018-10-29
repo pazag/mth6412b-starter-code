@@ -19,13 +19,13 @@ Attention, tous les noeuds doivent avoir des données de même type.
 """
 mutable struct Graph{T} <: AbstractGraph{T}
 	name_::String
-	nodes_::Vector{Node{T}}
+	nodes_::Vector{AbstractNode{T}}
 	edges_::Vector{Edge}
 end
 
 """Ajoute un noeud au graphe.
 Attention, si le noeud est déjà dans le graph, on ne fait rien."""
-function add_node!(graph::Graph{T}, node::Node{T}) where T
+function add_node!(graph::Graph{T}, node::AbstractNode{T}) where T
 	push!(graph.nodes_, node)
 	graph
 end
