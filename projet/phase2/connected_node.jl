@@ -1,4 +1,8 @@
+import Base.parent
+
 include("../phase1/node.jl")
+
+
 
 """Type représentant les noeuds connexes d'un graphe.
 

@@ -48,12 +48,3 @@ function kruskal(graph::AbstractGraph)
 	list_node = nodes(graph)
     Graph(g_name, list_node, A_k)
 end
-
-
-function get_total_weight(graph::AbstractGraph)
-	total_weight=0
-	for edge in edges(graph)
-		total_weight+=weight(edge)
-	end
-	total_weight
-end

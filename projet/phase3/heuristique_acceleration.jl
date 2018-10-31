@@ -1,3 +1,5 @@
+include("../phase2/kruskal.jl")
+
 """Renvoie un arbre de recouvrement minimal en utilisant l'algorithme de Kruskal
 """
 function heuristique_union_rang(graph::AbstractGraph)
@@ -27,7 +29,7 @@ function heuristique_union_rang(graph::AbstractGraph)
 				set_parent!(dict_c_node[id(root2)],root1)
 			end
 			if rg1 == rg2
-				set_rang!((dict_c_node[id(root1)], rg1 + 1)
+				set_rang!(dict_c_node[id(root1)], rg1 + 1)
 			end
             k=k+1
         end
@@ -50,7 +52,7 @@ function get_root_compression(connected_node::ConnectedNode)
 		push!(chemin_recherche,node)
     end
 	for n in chemin_recherche
-		set_parent!(n,node)
+		id(n)!=id(node) && set_parent!(n,node)
 	end
     return node
 end

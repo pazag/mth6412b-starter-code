@@ -1,4 +1,4 @@
-import Base.maximum
+import Base.maximum, Base.push!, Base.length, Base.popfirst!
 
 
 abstract type AbstractQueue{T} end

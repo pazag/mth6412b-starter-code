@@ -19,13 +19,13 @@ Attention, tous les noeuds doivent avoir des données de même type.
 """
 mutable struct Graph{T} <: AbstractGraph{T}
 	name_::String
-	nodes_::Vector{AbstractNode{T}}
+	nodes_::Vector{Node{T}}
 	edges_::Vector{Edge}
 end
 
 """Ajoute un noeud au graphe.
 Attention, si le noeud est déjà dans le graph, on ne fait rien."""
-function add_node!(graph::Graph{T}, node::AbstractNode{T}) where T
+function add_node!(graph::Graph{T}, node::Node{T}) where T
 	push!(graph.nodes_, node)
 	graph
 end
@@ -66,6 +66,18 @@ edges(graph::AbstractGraph) = graph.edges_
 
 """Renvoie le nombre d'arêtes du graphe."""
 nb_edges(graph::AbstractGraph) = length(graph.edges_)
+
+"""Donne le poids total du graph"""
+function get_total_weight(graph::AbstractGraph)
+	total_weight=0
+	for edge in edges(graph)
+		total_weight+=weight(edge)
+	end
+	total_weight
+end
+
+
+
 
 """Affiche un graphe"""
 function show(graph::Graph)

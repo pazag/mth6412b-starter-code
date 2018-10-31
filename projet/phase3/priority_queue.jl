@@ -14,7 +14,7 @@ function popfirst!(q::PriorityQueue)
 	highest = q.items[1]
 	for item in q.items[2:end]
 		if item > highest
-			hight = item
+			highest = item
 		end
 	end
 	idx = findall(x -> x == highest, q.items)[1]
@@ -28,7 +28,7 @@ function poplast!(q::PriorityQueue)
 	lowest = q.items[1]
 	for item in q.items[2:end]
 		if item < lowest
-			hight = item
+			lowest = item
 		end
 	end
 	idx = findall(x -> x == lowest, q.items)[1]

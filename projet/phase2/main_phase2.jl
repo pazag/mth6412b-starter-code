@@ -16,7 +16,11 @@ my_node7 = Node(7,0)
 my_node8 = Node(8,0)
 my_node9=  Node(9,0)
 
-nodes_list=[my_node1,my_node2,my_node3,my_node4,my_node5,my_node6,my_node7,my_node8,my_node9]
+nodes_list=AbstractNode{Int64}[]
+nodes_list_bis=[my_node1,my_node2,my_node3,my_node4,my_node5,my_node6,my_node7,my_node8,my_node9]
+for node in nodes_list
+    push!(nodes_list,node)
+end
 
 edge1 = Edge(1, 2, 4)
 edge2 = Edge(1, 8, 8)
@@ -34,11 +38,13 @@ edge13= Edge(7, 8, 1)
 edge14 = Edge(8, 9, 7)
 
 edges_list = [edge1, edge2, edge3, edge4,edge5,edge6,edge7,edge8,edge9,edge10,edge11,edge12,edge13,edge14]
-graph_example=Graph("Exemple_vu_en_cours",nodes_list,edges_list)
+graph_example=Graph("Exemple_vu_en_cours",nodes_list_bis,edges_list)
 kruskal_graph=kruskal(graph_example)
 
 println("\n\n")
 show(kruskal_graph)
+println(get_total_weight(kruskal_graph))
+
 println("\n\n\n\n\n\n\n")
 
 """Test de l'algorithme de kruskal à partir d'une instance"""
@@ -52,5 +58,4 @@ read_stsp(file_to_open)
 graph_2=create_graph(file_to_open)
 kruskal_graph2=kruskal(graph_2)
 show(kruskal_graph2)
-
 println(nb_nodes(kruskal_graph2))

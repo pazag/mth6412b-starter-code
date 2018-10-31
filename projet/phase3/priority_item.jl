@@ -3,18 +3,18 @@ import Base.isless, Base.==
 abstract type AbstractPriorityItem{T} end
 
 mutable struct PriorityItem{T} <: AbstractPriorityItem{T}
-	priority::Int
 	data::T
+	priority::Float64
 end
 
-function PriorityItem(priority::Int, data::T) where T
-	PriorityItem{T}(max(0, priority), data)
+function PriorityItem(data::T,priority::Int) where T
+	PriorityItem{T}(data,max(0, priority))
 end
 
 priority(p::PriorityItem) = p.priority
 data(p::PriorityItem)=p.data
 
-function priority!(p::PriorityItem, priority::Int)
+function priority!(p::PriorityItem, priority::Float64)
 	p.priority = max(0, priority)
 	p
 end
