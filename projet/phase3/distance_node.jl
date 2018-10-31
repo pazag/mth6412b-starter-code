@@ -10,6 +10,9 @@ mutable struct DistanceNode{T} <: ConnectedNode{T}
     distance_::Union{Real,Inf}
 end
 
+
+
+
 """Renvoie la distance du noeud"""
 distance(distance_node::DistanceNode) = distance_node.distance_
 
