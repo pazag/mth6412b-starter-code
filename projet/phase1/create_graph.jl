@@ -13,7 +13,7 @@ function create_graph(filename::String)
   nodes_dict, edges_list_list = read_stsp(filename)
 
   T = valtype(nodes_dict)
-  graph_nodes = Node{T}[]
+  graph_nodes = AbstractNode{T}[]
 
   for node_id in keys(nodes_dict)
     node = Node(node_id, nodes_dict[node_id])
