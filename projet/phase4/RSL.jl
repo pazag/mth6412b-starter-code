@@ -9,6 +9,10 @@ include("../phase3/heuristique_acceleration.jl")
 
 include("dfs.jl")
 
+"""
+Renvoit un graphe qui correspond à une tournée construite par l'algorithme de RSL.
+La tournée peut avoir des arêtes de poids infinis si le graphe n'est pas complet
+"""
 function rsl(graph::AbstractGraph,
              s::AbstractNode{T}) where T
     #Creation de l'arbre de recouvrement de poids minimal

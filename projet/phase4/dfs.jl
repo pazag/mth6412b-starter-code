@@ -2,6 +2,7 @@ include("markednode.jl")
 
 """
 Exploration en profondeur récursive attribuant un prénum à chaque noeud visité.
+Le graphe renvoyé contient seulement les noeuds de la tournée dans l'ordre dans lequel ils doivent être visité
 """
 function dfs(G::Graph{T}) where T
     k = 1
@@ -19,6 +20,9 @@ function dfs(G::Graph{T}) where T
     return tour_graph
 end
 
+"""
+Lalala
+"""
 function dfs_visit(G::Graph{T},
                    node::MarkedNode{T},
                    k::Int,
