@@ -234,8 +234,60 @@ function plot_graph(nodes, edges)
     fig
 end
 
-"""Fonction de commodité qui lit un fichier stsp et trace le graphe."""
-function plot_graph(filename::String)
-    graph_nodes, edges = read_stsp(filename)
-    plot_graph(graph_nodes, edges)
+"""Fonction de commodité qui trace le graphe"""
+function plot_graph(graph::AbstractGraph)
+    fig = plot(legend=false)
+
+    graph_nodes = nodes(graph)
+    graph_edges = edges(graph)
+
+    x=[]
+    y=[]
+
+    for edge in graph_edges
+
+        id1 = edge_id1(edge)
+        id2 = edge_id2(edge)
+
+        index1 = findall(n -> id(n) == id1, graph_nodes)
+        index2 = findall(n -> id(n) == id2, graph_nodes)
+
+        node1=graph_nodes[index1][1]
+        node2=graph_nodes[index2][1]
+
+        plot!([data(node1)[1],data(node2)[1]], [data(node1)[2],data(node2)[2]],
+               linewidth=1.5, alpha=0.75, color=:lightgray)
+
+        push!(x,data(node1)[1])
+        push!(x,data(node2)[1])
+        push!(y,data(node1)[2])
+        push!(y,data(node2)[2])
+    end
+    scatter!(x,y)
+    fig
 end
+
+"""Fonction de commodité qui trace deux graphes sur la même figure"""
+function plot_graph(graph1::AbstractGraph, graph2::AbstractGraph)
+    fig=plot_graph(graph1)
+
+    graph_edges = edges(graph2)
+    graph_nodes=nodes(graph2)
+
+    for edge in graph_edges
+
+        id1 = edge_id1(edge)
+        id2 = edge_id2(edge)
+
+        index1 = findall(n -> id(n) == id1, graph_nodes)
+        index2 = findall(n -> id(n) == id2, graph_nodes)
+
+        node1=graph_nodes[index1][1]
+        node2=graph_nodes[index2][1]
+
+        plot!([data(node1)[1],data(node2)[1]], [data(node1)[2],data(node2)[2]],
+               linewidth=2, alpha=0.75, color=:red)
+    end
+    fig
+end
+
