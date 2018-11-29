@@ -2,7 +2,8 @@ include("../phase2/kruskal.jl")
 include("../phase3/prim.jl")
 include("RSL.jl")
 
-"""Cree un one tree.
+"""
+Cree un one tree.
 - Si le booleen est true, le mst est généré avec l'algorithme de prim, sinon, avec l'algorithme de Kruskal.
 - La racine ne doit pas être le premier noeud car on l'enlève pour faire le one tree.
 """
@@ -46,7 +47,8 @@ function create_one_tree(graph::AbstractGraph,
     mst
 end
 
-"""Fonction qui renvoit un vecteur de la taille du nombre de noeuds où chaque valeur correspond
+"""
+Fonction qui renvoit un vecteur de la taille du nombre de noeuds où chaque valeur correspond
 au degré du noeud dont l'identifiant est l'indice dans le vecteur
 """
 function nodes_degree(graph::AbstractGraph)
@@ -59,8 +61,10 @@ function nodes_degree(graph::AbstractGraph)
     degree
 end
 
-"""Renvoit un nouveau graphe avec des poids modifiés.
-Le graphe initial reste inchangé"""
+"""
+Renvoit un nouveau graphe avec des poids modifiés.
+Le graphe initial reste inchangé
+"""
 function new_weights(graph::AbstractGraph,
                      pi_vect::Vector{Float64})
 
@@ -76,7 +80,8 @@ function new_weights(graph::AbstractGraph,
     Graph(name(graph),nodes(graph),list_edges)
 end
 
-"""Renvoit un graphe qui correspond à une tournée construite par l'algorithme de HK.
+"""
+Renvoit un graphe qui correspond à une tournée construite par l'algorithme de HK.
 - Si l'optimal n'est pas atteint après un certain nombre d'itérations, la tournée renvoyée
 correspond à une tournée construite sur le dernier one tree avec l'algorithme de RSL.
 - Si le booleen est true, les mst sont générés avec l'algorithme de prim, sinon, avec l'algorithme de Kruskal.

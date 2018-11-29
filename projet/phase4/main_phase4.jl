@@ -39,7 +39,7 @@ file_to_open=string(path,filename)
 println(filename)
 graph_4=create_graph(file_to_open)
 rsl_4 = rsl(graph_4,nodes(graph_4)[1]);
-hk_4 = hk(graph_4,nodes(graph_4)[2],use_prim=true,max_iter=1000);
+hk_4 = hk(graph_4,nodes(graph_4)[2],use_prim=true,max_iter=10000);
 
 
 
@@ -56,23 +56,28 @@ println("\n\n")
 println("bayg29.tsp")
 println("Poids tournée RSL : ", get_total_weight(rsl_1) )
 println("Poids tournée HK : ", get_total_weight(hk_1) )
+println("Poids optimal : ", 1610 )
 
 println("\n\n")
 println("bays29.tsp")
 println("Poids tournée RSL : ", get_total_weight(rsl_2) )
 println("Poids tournée HK : ", get_total_weight(hk_2) )
+println("Poids optimal : ",  2020 )
 
 println("\n\n")
 println("dantzig42.tsp")
 println("Poids tournée RSL : ", get_total_weight(rsl_3) )
 println("Poids tournée HK : ", get_total_weight(hk_3) )
+println("Poids optimal : ",  699)
 
 println("\n\n")
 println("gr120.tsp")
 println("Poids tournée RSL : ", get_total_weight(rsl_4) )
 println("Poids tournée HK : ", get_total_weight(hk_4) )
+println("Poids optimal : ",  6942)
 
 println("\n\n")
 println("pa561.tsp")
 println("Poids tournée RSL : ", get_total_weight(rsl_5) )
 println("Poids tournée HK : ", get_total_weight(hk_5) )
+println("Poids optimal : ", 2763  )

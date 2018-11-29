@@ -21,7 +21,8 @@ function dfs(G::Graph{T}) where T
 end
 
 """
-Lalala
+Fonction auxilliaire de la fonction récursive dfs
+Ne doit pas être appelée en dehors de dfs
 """
 function dfs_visit(G::Graph{T},
                    node::MarkedNode{T},
