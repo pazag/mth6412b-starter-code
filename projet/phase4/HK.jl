@@ -33,7 +33,7 @@ function create_one_tree(graph::AbstractGraph,
     use_prim ? mst = prim(mst_graph,root) : mst = kruskal(mst_graph)
 
     # Pour construire le 1-tree on rajoute le noeud enlevé au préalable
-    add_node!(mst,chosen_node)
+    add_node_bis!(mst,chosen_node)
 
     # Ainsi que les deux arêtes de poids minimum
     weights = map(edge->weight(edge),chosen_edges)
@@ -107,6 +107,7 @@ function hk(graph::AbstractGraph,
     stop = tired || opt
 
     while !stop
+        @info("iteraion HK : ", iter)
 
         #màj poids du one_tree
         pi_vect = pi_vect + t*v

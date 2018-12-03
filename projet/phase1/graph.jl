@@ -36,6 +36,15 @@ function add_node!(graph::Graph{T}, node::AbstractNode{T}) where T
 	graph
 end
 
+function add_node_bis!(graph::Graph{T}, node::AbstractNode{T}) where T
+	graph.nodes_ = graph.nodes_[end:-1:1]
+	push!(graph.nodes_,node)
+	graph.nodes_ = graph.nodes_[end:-1:1]
+
+	graph
+end
+
+
 # """Retire un noeud au graphe.
 # Attention, si le noeud n'est pas dans le graph, on ne fait rien."""
 # function remove_node!(graph::Graph{T}, node::AbstractNode{T}) where T
