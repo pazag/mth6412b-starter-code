@@ -128,7 +128,13 @@ function hk(graph::AbstractGraph,
     #Dictionnaire pour recuperer le vrai poids des arêtes dans notre tournee
     dict_distance=distance_between_node(graph)
     if (tired)
-        rsl_graph = rsl(one_tree,nodes(graph)[1])
+
+
+        rsl_nodes = copy(nodes(one_tree))
+        rsl_edges = copy(edges(one_tree))
+        rsl_graph = Graph("rsl",rsl_nodes,rsl_edges)
+        rsl_graph = rsl(rsl_graph,nodes(rsl_graph)[1])
+
         for edge in edges(rsl_graph)
             id1=edge_id1(edge)
             id2=edge_id2(edge)
